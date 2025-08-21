@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Stockly
 
-## Getting Started
+Build a simple application using **Next.js 15 (App Router)**. The app has public and protected pages with basic authentication using **NextAuth.js**. Users can view a landing page, visit product details, and after logging in, access a protected product management page to add new products.
 
-First, run the development server:
+---
 
+## Core Features
+
+1. **Landing Page (`/`)**  
+   - Includes 4 sections: Navbar, Hero, Product Highlights, Footer  
+   - Navigation to login and products  
+   - No authentication required
+
+2. **Login with NextAuth (`/login`)**  
+   - Social login (e.g., Google) or credential login using NextAuth  
+   - Redirects to `/products` after successful login
+
+3. **Product List Page (`/products`)**  
+   - Publicly accessible  
+   - Fetch and show a list of products  
+   - Each product includes: name, description, price, image, and a details button
+
+4. **Product Details Page (`/products/[id]`)**  
+   - Show full details of a single product  
+   - Publicly accessible
+
+5. **Protected Page: Add Product (`/dashboard/add-product`)**  
+   - Accessible only when logged in  
+   - Form to add a new product and store it in the database  
+   - Redirects unauthenticated users to login
+
+---
+
+## Optional Enhancements
+- Show a loading spinner when submitting forms  
+- Display toast message on successful product addition  
+
+
+---
+
+## Technologies Used
+- **Next.js 15** (App Router)  
+- **NextAuth.js** for authentication  
+- **Tailwind CSS** for styling  
+- **Framer Motion** for animations  
+- **MongoDB** for backend storage (via API routes)  
+
+---
+
+## Setup & Installation
+
+### Prerequisites
+- Node.js (v18+ recommended)  
+- npm, yarn, or pnpm  
+- MongoDB Atlas account
+
+### Steps
+1. Clone the repository:  
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone <your-repo-url>
+cd <your-repo-folder>
