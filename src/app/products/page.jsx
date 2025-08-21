@@ -1,9 +1,9 @@
-// src/app/products/page.jsx
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import CustomLoader from "../Components/CustomLoader";
+import Link from "next/link";
 
 export default function Page() {
     const [products, setProducts] = useState([]);
@@ -25,7 +25,12 @@ export default function Page() {
         fetchProducts();
     }, []);
 
-    if (loading) return <p className="text-center mt-10"><CustomLoader></CustomLoader></p>;
+    if (loading)
+        return (
+            <div className="flex justify-center mt-10">
+                <CustomLoader />
+            </div>
+        );
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-10">
@@ -51,9 +56,11 @@ export default function Page() {
                                 <p className="text-gray-600 mb-4">{product.description}</p>
                                 <p className="text-lg font-bold mb-4">${product.price}</p>
                             </div>
-                            <button className="mt-auto bg-blue-900 text-white py-2 px-4 rounded hover:bg-blue-600 transition">
-                                Details
-                            </button>
+                            <Link href={`/products/${product._id}`} className="mt-auto">
+                                <button className="bg-blue-900 text-white py-2 px-4 rounded hover:bg-blue-600 transition w-full">
+                                    Details
+                                </button>
+                            </Link>
                         </div>
                     </motion.div>
                 ))}
