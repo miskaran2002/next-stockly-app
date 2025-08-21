@@ -34,7 +34,12 @@ export default function Page() {
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-10">
-            <h1 className="text-3xl font-bold mb-6 text-center">Products</h1>
+            <h1 className="text-3xl font-bold  mb-6 text-center text-blue-900">Products</h1>
+            <p className="text-center text-gray-700 mb-12">
+                Welcome to our exclusive collection of high-quality products designed to make your life easier and more enjoyable.
+                Browse through our carefully curated selection, from electronics to furniture, all crafted to meet your needs.
+                Discover the perfect items that combine style, functionality, and unbeatable value.
+            </p>
             <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {products.map((product) => (
                     <motion.div
