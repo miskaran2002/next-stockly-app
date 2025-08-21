@@ -28,14 +28,30 @@ export default function ProductPage() {
 
     if (loading) return <CustomLoader />;
 
-    if (!product) return <p className="text-center mt-10 text-red-500 font-semibold">Product not found</p>;
+    if (!product)
+        return (
+            <p className="text-center mt-10 text-red-500 font-semibold">
+                Product not found
+            </p>
+        );
 
     return (
-        <div className="max-w-4xl mx-auto px-4 py-10">
-            <div className="flex flex-col md:flex-row gap-8 bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 pt-12 lg:pt-24 pb-12">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-blue-900">
+                Product Details
+            </h1>
+
+            {/* Intro Paragraph */}
+            <p className="text-gray-700 mb-8 mt-8 lg:mt-20 text-base sm:text-lg leading-relaxed">
+                Discover the exceptional features of <strong>{product.name}</strong>.{' '}
+                {product.description} This product is crafted to provide both quality
+                and convenience, ensuring you get the best experience possible.
+            </p>
+
+            <div className="flex flex-col md:flex-row gap-6 md:gap-10 bg-white shadow-lg rounded-lg overflow-hidden">
                 {/* Product Image */}
                 {product.image && (
-                    <div className="md:w-1/2">
+                    <div className="w-full md:w-1/2 h-64 md:h-auto">
                         <img
                             src={product.image}
                             alt={product.name}
@@ -45,19 +61,27 @@ export default function ProductPage() {
                 )}
 
                 {/* Product Details */}
-                <div className="md:w-1/2 p-6 flex flex-col justify-between">
+                <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between">
                     <div>
-                        <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-                        <p className="text-gray-500 mb-2">Category: <span className="font-medium">{product.category}</span></p>
-                        <p className="text-gray-700 mb-4">{product.description}</p>
+                        <h2 className="text-2xl sm:text-4xl font-bold mb-3">{product.name}</h2>
+                        <p className="text-gray-500 mb-2">
+                            Category: <span className="font-medium">{product.category}</span>
+                        </p>
+                        <p className="text-gray-700 mb-6">{product.description}</p>
                     </div>
 
-                    <div className="mt-4">
-                        <p className="text-2xl font-bold text-green-600 mb-2">${product.price?.$numberInt || product.price}</p>
-                        <p className="text-sm text-gray-400">Product ID: {product._id?.$oid || product._id}</p>
+                    <div>
+                        <p className="text-2xl sm:text-3xl font-bold text-green-600 mb-2">
+                            ${product.price?.$numberInt || product.price}
+                        </p>
+                        <p className="text-sm text-gray-400">
+                            Product ID: {product._id?.$oid || product._id}
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
+
+
     );
 }

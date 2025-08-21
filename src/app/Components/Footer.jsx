@@ -58,9 +58,9 @@ export default function Footer() {
                 {/* 4. Contact Info */}
                 <div className="flex flex-col space-y-4">
                     <h3 className="text-white font-semibold">Contact</h3>
-                    <p>Phone: +880123456789</p>
-                    <p>Email: info@stickly.com</p>
-                    <p>Portfolio: <Link href="https://your-portfolio.com" className="hover:text-white transition" target="_blank">Visit</Link></p>
+                    <p>Phone: +8801608822137</p>
+                    <p>Email: raihanuddin.cse8.bu@gmail.com</p>
+                    <p>Portfolio: <Link href="https://its-me-mdraihanuddin.netlify.app/" className="hover:text-white transition" target="_blank">Visit</Link></p>
                 </div>
 
             </div>
