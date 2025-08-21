@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import CustomLoader from "../Components/CustomLoader";
 
 export default function Page() {
     const [products, setProducts] = useState([]);
@@ -24,7 +25,7 @@ export default function Page() {
         fetchProducts();
     }, []);
 
-    if (loading) return <p className="text-center mt-10">Loading products...</p>;
+    if (loading) return <p className="text-center mt-10"><CustomLoader></CustomLoader></p>;
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-10">
