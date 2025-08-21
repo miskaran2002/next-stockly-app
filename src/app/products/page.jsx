@@ -53,7 +53,17 @@ export default function Page() {
                         <div className="p-6 flex flex-col justify-between flex-1">
                             <div>
                                 <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-                                <p className="text-gray-600 mb-4">{product.description}</p>
+                                <p
+                                    className="text-gray-600 mb-4"
+                                    style={{
+                                        display: '-webkit-box',
+                                        WebkitLineClamp: 2,
+                                        WebkitBoxOrient: 'vertical',
+                                        overflow: 'hidden',
+                                    }}
+                                >
+                                    {product.description}
+                                </p>
                                 <p className="text-lg font-bold mb-4">${product.price}</p>
                             </div>
                             <Link href={`/products/${product._id}`} className="mt-auto">
