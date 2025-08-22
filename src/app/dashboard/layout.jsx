@@ -3,14 +3,23 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FiHome, FiPlusSquare, FiLogOut } from "react-icons/fi";
-import { useState } from "react";
-import { signOut } from "next-auth/react"; // Import signOut
-import Swal from "sweetalert2"; // Import SweetAlert2
+import { useState, useEffect } from "react";
+import { signOut, useSession } from "next-auth/react"; // useSession import
+import Swal from "sweetalert2";
+import CustomLoader from "../Components/CustomLoader";
 
 export default function DashboardLayout({ children }) {
     const pathname = usePathname();
-    const router = useRouter(); // Router for manual redirect
+    const router = useRouter();
     const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const { data: session, status } = useSession(); // Session data
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login"); // Redirect to login if not authenticated
+        }
+    }, [status, router]);
 
     const navItems = [
         { name: "Home", href: "/", icon: <FiHome /> },
@@ -18,20 +27,20 @@ export default function DashboardLayout({ children }) {
     ];
 
     const handleLogout = async () => {
-        // Prevent automatic redirect
         await signOut({ redirect: false });
-
-        // Show SweetAlert2 success message
         Swal.fire({
             icon: "success",
             title: "Signed out successfully",
             showConfirmButton: false,
             timer: 1500,
         }).then(() => {
-            // Redirect to homepage after alert closes
-            router.push("/");
+            router.push("/login");
         });
     };
+
+    // Optional: show loading while session is being checked
+    if (status === "loading") return <CustomLoader></CustomLoader>;
+    if (status === "unauthenticated") return null; // Will redirect, don't render layout
 
     return (
         <div className="flex min-h-screen bg-gray-100">
