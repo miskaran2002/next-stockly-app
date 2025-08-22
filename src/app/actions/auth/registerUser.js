@@ -1,12 +1,16 @@
 "use server";
 
 import { collectionNamesObj, mongodbConnect } from "@/lib/mongodb";
+import bcrypt from "bcrypt";
 
 export const registerUser = async (payload) => {
     // Await the connection to get the collection
     const userCollection = await mongodbConnect(collectionNamesObj.userCollection);
 
-    const { email, fullName, password } = payload;
+    let { email, fullName, password } = payload;
+
+    let hasedPassword = await bcrypt.hash(password, 10);
+    password = hasedPassword;
 
     // validation
     if (!email || !fullName || !password) {
