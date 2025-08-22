@@ -10,6 +10,10 @@ const client = new MongoClient(uri, {
     }
 });
 
+export const collectionNamesObj={
+    userCollection: "users",
+}
+
 export async function mongodbConnect(collectionName) {
     try {
         // Connect the client to the server	(optional starting in v4.7)

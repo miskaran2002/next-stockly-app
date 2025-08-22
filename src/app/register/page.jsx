@@ -5,13 +5,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { registerUser } from "../actions/auth/registerUser";
 
 export default function RegisterPage() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (data) => {
-        console.log("Form Data:", data);
-        alert("Check console for submitted data!");
+        registerUser("Form Data:", data);
+       
     };
 
     return (
@@ -40,7 +41,7 @@ export default function RegisterPage() {
 
                     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
                         <div>
-                            <label className="block text-gray-700">Full Name</label>
+                           <label className="block text-gray-700">Full Name</label>
                             <input
                                 type="text"
                                 placeholder="Your Name"
