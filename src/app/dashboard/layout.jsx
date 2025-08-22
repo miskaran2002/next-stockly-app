@@ -1,24 +1,36 @@
-// app/dashboard/layout.jsx
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { FiHome, FiPlusSquare, FiLogOut, FiGrid, FiBarChart } from "react-icons/fi";
+import { usePathname, useRouter } from "next/navigation";
+import { FiHome, FiPlusSquare, FiLogOut } from "react-icons/fi";
 import { useState } from "react";
+import { signOut } from "next-auth/react"; // Import signOut
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 export default function DashboardLayout({ children }) {
     const pathname = usePathname();
+    const router = useRouter(); // Router for manual redirect
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const navItems = [
         { name: "Home", href: "/", icon: <FiHome /> },
         { name: "Add Product", href: "/dashboard/add-product", icon: <FiPlusSquare /> },
-
     ];
 
-    const handleLogout = () => {
-        // Add your NextAuth signOut logic here
-        console.log("Logging out...");
+    const handleLogout = async () => {
+        // Prevent automatic redirect
+        await signOut({ redirect: false });
+
+        // Show SweetAlert2 success message
+        Swal.fire({
+            icon: "success",
+            title: "Signed out successfully",
+            showConfirmButton: false,
+            timer: 1500,
+        }).then(() => {
+            // Redirect to homepage after alert closes
+            router.push("/");
+        });
     };
 
     return (
