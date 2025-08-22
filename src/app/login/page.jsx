@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import {  signIn } from "next-auth/react";
+
 
 export default function LoginPage() {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -12,7 +12,7 @@ export default function LoginPage() {
 
     const onSubmit = (data) => {
         setLoading(true);
-        console.log("Login Data:", data); // log the submitted form data
+        console.log("Login Data:", data); 
         
     };
 
