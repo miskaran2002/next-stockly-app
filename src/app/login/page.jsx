@@ -5,15 +5,14 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
+import Swal from "sweetalert2";
 
 export default function LoginPage() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState({ type: "", text: "" });
 
     const onSubmit = async (data) => {
         setLoading(true);
-        setMessage({ type: "", text: "" });
 
         const res = await signIn("credentials", {
             redirect: false,
@@ -22,11 +21,21 @@ export default function LoginPage() {
         });
 
         if (res?.error) {
-            setMessage({ type: "error", text: "Invalid email or password!" });
+            Swal.fire({
+                icon: "error",
+                title: "Login Failed",
+                text: "Invalid email or password!",
+            });
         } else if (res?.ok) {
-            setMessage({ type: "success", text: "Login successful! Redirecting..." });
-            // optional redirect
-            window.location.href = "/dashboard";
+            Swal.fire({
+                icon: "success",
+                title: "Login Successful",
+                text: "Redirecting to dashboard...",
+                timer: 1500,
+                showConfirmButton: false,
+            }).then(() => {
+                window.location.href = "/products";
+            });
         }
 
         setLoading(false);
@@ -82,16 +91,6 @@ export default function LoginPage() {
                                 <p className="text-red-500 text-sm">{errors.password.message}</p>
                             )}
                         </div>
-
-                        {/* Show success/error message */}
-                        {message.text && (
-                            <p
-                                className={`text-center text-sm ${message.type === "error" ? "text-red-500" : "text-green-600"
-                                    }`}
-                            >
-                                {message.text}
-                            </p>
-                        )}
 
                         <button
                             type="submit"
