@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Swal from "sweetalert2";
 import { registerUser } from "../actions/auth/registerUser";
 
 export default function RegisterPage() {
@@ -12,9 +13,33 @@ export default function RegisterPage() {
 
     const onSubmit = async (data) => {
         setLoading(true);
-        const res = await registerUser(data); // server action call
-        setLoading(false);
-        alert(res.message); // success or error
+        try {
+            const res = await registerUser(data); // server action call
+            if (res.success) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Success!",
+                    text: res.message,
+                    confirmButtonColor: "#1E3A8A",
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: res.message,
+                    confirmButtonColor: "#1E3A8A",
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Something went wrong. Please try again.",
+                confirmButtonColor: "#1E3A8A",
+            });
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
