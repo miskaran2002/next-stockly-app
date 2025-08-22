@@ -1,7 +1,6 @@
-// src/app/register/page.jsx
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -9,10 +8,13 @@ import { registerUser } from "../actions/auth/registerUser";
 
 export default function RegisterPage() {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [loading, setLoading] = useState(false);
 
-    const onSubmit = (data) => {
-        registerUser("Form Data:", data);
-       
+    const onSubmit = async (data) => {
+        setLoading(true);
+        const res = await registerUser(data); // server action call
+        setLoading(false);
+        alert(res.message); // success or error
     };
 
     return (
@@ -41,7 +43,7 @@ export default function RegisterPage() {
 
                     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
                         <div>
-                           <label className="block text-gray-700">Full Name</label>
+                            <label className="block text-gray-700">Full Name</label>
                             <input
                                 type="text"
                                 placeholder="Your Name"
@@ -79,8 +81,9 @@ export default function RegisterPage() {
                         <button
                             type="submit"
                             className="w-full bg-blue-900 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+                            disabled={loading}
                         >
-                            Register
+                            {loading ? "Registering..." : "Register"}
                         </button>
                     </form>
 

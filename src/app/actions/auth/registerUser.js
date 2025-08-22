@@ -2,21 +2,28 @@
 
 import { collectionNamesObj, mongodbConnect } from "@/lib/mongodb";
 
-
 export const registerUser = async (payload) => {
-    const userCollection = mongodbConnect(collectionNamesObj.userCollection)
+    // Await the connection to get the collection
+    const userCollection = await mongodbConnect(collectionNamesObj.userCollection);
+
+    const { email, fullName, password } = payload;
+
     // validation
-    const {email,name, password} = payload;
-    if (!email || !name || !password) 
-     return {success:false};
-    const user = await userCollection.findOne({ email: payload.email });
-   if (user) {
-       const result = await userCollection.insertOne(payload);
-       return result;
-
+    if (!email || !fullName || !password) {
+        return { success: false, message: "All fields are required" };
     }
-    return {success: false};
 
+    // check if user already exists
+    const existingUser = await userCollection.findOne({ email });
+    if (existingUser) {
+        return { success: false, message: "User already exists" };
+    }
 
+    // insert new user
+    const result = await userCollection.insertOne({ email, fullName, password });
+    if (result.insertedId) {
+        return { success: true, message: "Registration successful" };
+    }
 
-}
+    return { success: false, message: "Registration failed" };
+};
